@@ -51,6 +51,30 @@ inline int optimistic_search(sl_map_t *map, sl_key_t key, sl_node_t **preds, sl_
 }
 
 /*
+ * Function optimistic_get behaves similarly as optimistic_find; unlike 
+ * optimistic_find returning a bool indicating whether the key is in the 
+ * map or not, this one returns the value associated with the key.
+ */
+sl_val_t optimistic_get(sl_map_t *map, sl_key_t key) {
+  sl_node_t **succs, **preds;
+  int result, found;
+	
+  preds = (sl_node_t **)xmalloc(levelmax * sizeof(sl_node_t *));
+  succs = (sl_node_t **)xmalloc(levelmax * sizeof(sl_node_t *));
+  found = optimistic_search(map, key, preds, succs, 1);
+  result = (found != -1 && succs[found]->fullylinked && !succs[found]->marked);
+  void* ret = NULL;
+  if (result) {
+      ret = succs[found]->val;
+  }
+  free(preds);
+  free(succs);
+  return ret;
+}
+
+
+
+/*
  * Function optimistic_find corresponds to the contains method of the original 
  * paper. In contrast with the original version, it allocates and frees the 
  * memory at right places to avoid the use of a stop-the-world garbage 
@@ -88,6 +112,8 @@ inline void unlock_levels(sl_node_t **nodes, int highestlevel, int j) {
 
 /*
  * Function optimistic_insert stands for the add method of the original paper.
+ * Instead of just adding the value as the set version does, it inserts a 
+ * key-value pair.
  * Unlocking and freeing the memory are done at the right places.
  */
 int optimistic_insert(sl_map_t *map, sl_key_t key, sl_val_t val) {
