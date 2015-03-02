@@ -26,6 +26,17 @@
 
 #include "skiplist-lock.h"
 
+/*
+ * interface for set
+ */
 int optimistic_find(sl_intset_t *set, val_t val);
 int optimistic_insert(sl_intset_t *set, val_t val);
 int optimistic_delete(sl_intset_t *set, val_t val);
+
+/*
+ * interface for map
+ */
+val_t optimistic_get(sl_map_t *map, key_t key);
+int optimistic_find(sl_map_t *map, key_t val);
+int optimistic_insert(sl_map_t *map, key_t val);
+int optimistic_delete(sl_map_t *map, key_t val);
