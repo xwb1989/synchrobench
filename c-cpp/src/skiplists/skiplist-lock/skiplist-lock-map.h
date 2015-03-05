@@ -99,7 +99,7 @@ sl_node_t *sl_new_node(sl_key_t key, sl_val_t val, sl_node_t *next, int toplevel
 transactional);
 
 void sl_delete_node(sl_node_t *n);
-sl_map_t *sl_set_new();
+sl_map_t *sl_map_new();
 
 void sl_map_delete(sl_map_t *map);
 int sl_map_size(sl_map_t *map);

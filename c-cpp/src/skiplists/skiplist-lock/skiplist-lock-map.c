@@ -106,18 +106,18 @@ void sl_delete_node(sl_node_t *n)
 	free(n);
 }
 
-sl_map_t *sl_set_new()
+sl_map_t* sl_map_new()
 {
-	sl_map_t *set;
+	sl_map_t *map;
 	sl_node_t *min, *max;
 	
-	set = (sl_map_t *)xmalloc(sizeof(sl_map_t));
+	map = (sl_map_t*) xmalloc(sizeof(sl_map_t));
 	max = sl_new_node(VAL_MAX, NULL, NULL, levelmax, 0);
 	min = sl_new_node(VAL_MIN, NULL, max, levelmax, 0);
 	max->fullylinked = 1;
 	min->fullylinked = 1;
-	set->head = min;
-	return set;
+	map->head = min;
+	return map;
 }
 
 void sl_map_delete(sl_map_t *set)
@@ -133,13 +133,13 @@ void sl_map_delete(sl_map_t *set)
 	free(set);
 }
 
-int sl_map_size(sl_map_t *set)
+int sl_map_size(sl_map_t *map)
 {
 	int size = -1;
 	sl_node_t *node;
 	
 	/* We have at least 2 elements */
-	node = set->head->next[0];
+	node = map->head->next[0];
 	while (node->next[0] != NULL) {
 		if (node->fullylinked && !node->marked)
 			size++;
