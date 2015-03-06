@@ -20,7 +20,7 @@
 #include <stdint.h>
 
 //change it if necessary
-#include <../../atomic_ops/atomic_ops.h>
+#include <atomic_ops.h>
 
 #define DEFAULT_DURATION                10000
 #define DEFAULT_INITIAL                 256
